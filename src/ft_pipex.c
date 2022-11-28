@@ -1,0 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pipex.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/19 11:19:56 by isojo-go          #+#    #+#             */
+/*   Updated: 2022/11/28 16:46:43 by isojo-go         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../inc/ft_pipex.h"
+
+void	ft_child(char *str, char **envp)
+{
+	pid_t	pid;
+	// int		fd[2];
+
+	// if (pipe(fd) == -1)
+	// 	ft_exit_w_error();
+	pid = fork();
+	if (pid == -1)
+		ft_exit_w_error();
+	if (pid > 0)
+	{
+		ft_printf("Father process (pid %d) waiting for children to execute %s\n", pid, str);
+		waitpid(pid, NULL, 0);
+	}
+	else
+	{
+		ft_printf("Child process (pid %d) executing command %s\n", pid, str);
+		ft_run_command(str, envp);
+	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	int	infd;
+	int	outfd;
+	int	i;
+
+	if (argc == 5) // Cambiar a >= para bonus
+	{
+		infd = open(*(argv + 1), O_RDONLY);
+		dup2(infd, STDIN_FILENO);
+		outfd = open(*(argv + 4), O_CREAT | O_RDWR);
+		i = 2;
+		while (i < 4)
+			ft_child(*(argv + i++), envp);
+		// dup2(STDOUT_FILENO, outfd);
+		close(infd);
+		close(outfd); 
+	}
+	return (0);
+}
