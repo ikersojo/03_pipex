@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+         #
+#    By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/20 16:19:35 by isojo-go          #+#    #+#              #
-#    Updated: 2022/11/23 22:26:23 by isojo-go         ###   ########.fr        #
+#    Updated: 2022/11/28 17:19:16 by isojo-go         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@
 NAME		=	pipex
 INC_DIR		=	inc/
 SRC_DIR		=	src/
-LIBFT		=	libft/libft.a
+LIBFT_DIR	=	libft/libft.a
+LIBFT		=	libft
 
 # Source Files:
 
@@ -46,7 +47,7 @@ WHITE = \033[0;97m
 all:		$(NAME)
 
 $(NAME):	$(LIBFT) $(OBJ)
-			@$(CC) $(FLAGS) $(OBJ) $(LIBFT) -I$(INC_DIR) -o $(NAME)
+			@$(CC) $(FLAGS) $(OBJ) $(LIBFT_DIR) -I$(INC_DIR) -o $(NAME)
 			@echo "$(GREEN)pipex compiled!$(DEF_COLOR)"
 
 $(LIBFT):

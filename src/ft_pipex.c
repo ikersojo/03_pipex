@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:19:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/11/28 16:46:43 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:17:38 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	main(int argc, char **argv, char **envp)
 	if (argc == 5) // Cambiar a >= para bonus
 	{
 		infd = open(*(argv + 1), O_RDONLY);
+		if (infd == -1)
+			ft_exit_w_error();
 		dup2(infd, STDIN_FILENO);
 		outfd = open(*(argv + 4), O_CREAT | O_RDWR);
 		i = 2;
