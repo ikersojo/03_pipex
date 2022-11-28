@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:19:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/11/28 17:17:38 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/11/28 18:35:28 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,25 @@
 void	ft_child(char *str, char **envp)
 {
 	pid_t	pid;
-	// int		fd[2];
+	int		fd[2];
 
-	// if (pipe(fd) == -1)
-	// 	ft_exit_w_error();
+	if (pipe(fd) == -1)
+		ft_exit_w_error();
 	pid = fork();
 	if (pid == -1)
 		ft_exit_w_error();
 	if (pid > 0)
 	{
 		ft_printf("Father process (pid %d) waiting for children to execute %s\n", pid, str);
+		// close(*(fd + 1));
+		// dup2(*(fd + 0), STDIN_FILENO);
 		waitpid(pid, NULL, 0);
 	}
 	else
 	{
 		ft_printf("Child process (pid %d) executing command %s\n", pid, str);
+		// close(*(fd + 0));
+		// dup2(*(fd + 1), STDOUT_FILENO);
 		ft_run_command(str, envp);
 	}
 }

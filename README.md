@@ -100,7 +100,7 @@ Upon successful completion, a value of 0 is returned.  Otherwise, a value of -1
 is returned and errno is set to indicate the error.
 ```
 
-- read
+- read:
 ```
 #include <unistd.h>
 ssize_t  read(int fildes, void *buf, size_t nbyte);
@@ -113,7 +113,7 @@ zero is returned. Otherwise, a -1 is returned and the global variable errno is
 set to indicate the error.
 ```
 
-- waitp and waitpid
+- waitp and waitpid:
 ```
 #include <sys/wait.h>
 pid_t  wait(int *stat_loc);
@@ -178,7 +178,7 @@ the remaining status information about the child process:
 
 ```
 
-- pipe
+- pipe:
 ```
 #include <unistd.h>
 int  pipe(int fildes[2]);
@@ -199,7 +199,7 @@ On successful creation of the pipe, zero is returned. Otherwise, a value of -1
 is returned and the variable errno set to indicate theerror.
 ```
 
-- dup and dup2
+- dup and dup2:
 ```
 #include <unistd.h>
 int  dup(int fildes);
@@ -233,7 +233,7 @@ Otherwise, a value of -1 is returned and the global integer variable
 errno is set to indicate the error.
 ```
 
-- execve
+- execve:
 ```
 #include <unistd.h>
 int  execve(const char *path, char *const argv[], char *const envp[]);
@@ -317,7 +317,7 @@ colon and space (“: ”); otherwise, only the error message string is
 printed.
 ```
 
-- strerror
+- strerror:
 ```
 #include <string.h>
 char  *strerror(int errnum);
@@ -326,7 +326,7 @@ The strerror() function accepts an error number argument errnum and
 returns a pointer to the corresponding message string.
 ```
 
-- exit
+- exit:
 ```
 #include <stdlib.h>
 void  exit(int status);
