@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 18:01:50 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/11/28 16:45:58 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/11/29 21:03:31 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 
-void	ft_exit_w_error(void);
+void	ft_exit_w_error(char *str);
 void	ft_run_command(char *arg, char **envp);
 
 #endif

@@ -6,15 +6,25 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 22:25:48 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/11/24 17:16:49 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/11/29 21:47:55 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_pipex.h"
 
-void	ft_exit_w_error(void)
+void	ft_exit_w_error(char *str)
 {
-	perror("\033[31mError");
+	if (ft_strcmp("errno", str) == 0)
+	{
+		perror("\033[31mError");
+		ft_putstr_fd("\033[0;39m", 2);
+	}
+	else
+	{
+		ft_putstr_fd("\033[31mError: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("\033[0;39m", 2);
+	}
 	exit(EXIT_FAILURE);
 }
 
@@ -55,12 +65,13 @@ void	ft_run_command(char *arg, char **envp)
 	error_flag = 0;
 	cmd = ft_split(arg, ' ');
 	cmd_path = ft_get_path(*(cmd + 0), envp);
-	if (execve(cmd_path, cmd, envp) != -1)
+	if (execve(cmd_path, cmd, envp) == -1)
 		error_flag = 1;
 	i = 0;
 	while (*(cmd + i))
 		free (*(cmd + i++));
 	free (cmd);
+	free (cmd_path);
 	if (error_flag == 1)
-		ft_exit_w_error();
+		ft_exit_w_error("Command not found\n");
 }

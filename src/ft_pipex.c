@@ -3,37 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:19:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/11/28 18:35:28 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/03 08:26:07 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_pipex.h"
 
-void	ft_child(char *str, char **envp)
+static void	ft_process(char *str, char **envp)
 {
 	pid_t	pid;
 	int		fd[2];
+	int		status;
 
 	if (pipe(fd) == -1)
-		ft_exit_w_error();
+		ft_exit_w_error("errno");
 	pid = fork();
 	if (pid == -1)
-		ft_exit_w_error();
+		ft_exit_w_error("errno");
 	if (pid > 0)
 	{
-		ft_printf("Father process (pid %d) waiting for children to execute %s\n", pid, str);
-		// close(*(fd + 1));
-		// dup2(*(fd + 0), STDIN_FILENO);
-		waitpid(pid, NULL, 0);
+		close(*(fd + 1));
+		dup2(*(fd + 0), STDIN_FILENO);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status) && (WEXITSTATUS(status) == 1))
+			exit(EXIT_FAILURE);
 	}
 	else
 	{
-		ft_printf("Child process (pid %d) executing command %s\n", pid, str);
-		// close(*(fd + 0));
-		// dup2(*(fd + 1), STDOUT_FILENO);
+		close(*(fd + 0));
+		dup2(*(fd + 1), STDOUT_FILENO);
 		ft_run_command(str, envp);
 	}
 }
@@ -44,19 +45,22 @@ int	main(int argc, char **argv, char **envp)
 	int	outfd;
 	int	i;
 
-	if (argc == 5) // Cambiar a >= para bonus
+	if (argc == 5)
 	{
 		infd = open(*(argv + 1), O_RDONLY);
 		if (infd == -1)
-			ft_exit_w_error();
+			ft_exit_w_error("errno");
 		dup2(infd, STDIN_FILENO);
-		outfd = open(*(argv + 4), O_CREAT | O_RDWR);
+		outfd = open(*(argv + 4), O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		i = 2;
-		while (i < 4)
-			ft_child(*(argv + i++), envp);
-		// dup2(STDOUT_FILENO, outfd);
+		while (i < (argc - 2))
+			ft_process(*(argv + i++), envp);
+		dup2(outfd, STDOUT_FILENO);
+		ft_run_command(*(argv + i), envp);
 		close(infd);
-		close(outfd); 
+		close(outfd);
 	}
-	return (0);
+	else
+		ft_exit_w_error("Wrong syntax: ./pipex infile cmd1 cmd2 outfile)\n");
+	return (EXIT_SUCCESS);
 }
