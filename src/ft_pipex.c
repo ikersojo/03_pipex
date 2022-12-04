@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:19:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/04 18:21:09 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/04 19:02:23 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ int	main(int argc, char **argv, char **envp)
 		close(outfd);
 	}
 	else
-		ft_exit_w_error("Wrong syntax: ./pipex infile cmd1 cmd2 outfile\n");
+		ft_exit_w_error("syntax: ./pipex infile cmd1 cmd2 outfile\n");
 	return (EXIT_SUCCESS);
 }

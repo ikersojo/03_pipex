@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:19:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/04 18:05:12 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/04 19:49:01 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,52 @@ static void	ft_process(char *str, char **envp)
 	}
 }
 
+int	ft_openfiles(int argc, char **argv, int *infd, int *outfd)
+{
+	int		bonus;
+	char	*opath;
+
+	if (ft_strcmp("here_doc", *(argv + 1)) == 0)
+	{
+		bonus = 2;
+		*infd = open(*(argv + 2), O_RDONLY);
+		if (*infd == -1)
+			ft_exit_w_error("errno");
+	}
+	else
+	{
+		bonus = 1;
+		*infd = open(*(argv + 1), O_RDONLY);
+		if (*infd == -1)
+			ft_exit_w_error("errno");
+	}
+
+	opath = *(argv + (argc - 1));
+	if (ft_strcmp("here_doc", *(argv + 1)) == 0)
+		*outfd = open(opath, O_WRONLY | O_CREAT | O_APPEND, 0666);
+	else
+		*outfd = open(opath, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	if (*outfd == -1)
+		ft_exit_w_error("errno");
+
+
+
+	return (bonus);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	int	infd;
 	int	outfd;
-	int	i;
+	int	bonus; // 1 para el caso extendido y 2 para here_doc
+	int i;
 
 	if (argc >= 5)
 	{
-		infd = open(*(argv + 1), O_RDONLY);
-		if (infd == -1)
-			ft_exit_w_error("errno");
-		dup2(infd, STDIN_FILENO);
-		outfd = open(*(argv + (argc - 1)), O_WRONLY | O_CREAT | O_TRUNC, 0666);
-		if (outfd == -1)
-			ft_exit_w_error("errno");
+		bonus = ft_openfiles(argc, argv, &infd, &outfd);
 		i = 2;
+		if (bonus == 2)
+			i = 3;
 		while (i < (argc - 2))
 			ft_process(*(argv + i++), envp);
 		dup2(outfd, STDOUT_FILENO);
@@ -61,6 +91,6 @@ int	main(int argc, char **argv, char **envp)
 		close(outfd);
 	}
 	else
-		ft_exit_w_error("Wrong syntax: ./pipex infile cmd1 ...  outfile\n");
+		ft_exit_w_error("Wrong syntax\n");
 	return (EXIT_SUCCESS);
 }
