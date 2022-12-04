@@ -13,7 +13,35 @@ with the following sytanx:
 ```
 
 ## Program layout and instruction sequence:
-a
+The Program is divided in the following key functions:
+- ft_pipex.c:
+	- main function:
+		- checks the input arguments
+		- opens infile and out file
+		- launches the loop of the commands specified in arguments
+		- directly runs the last command to be placed in outfile
+
+	- run process function:
+		- creates a pipe and a fork
+		- for the father:
+			- closes the write end of the pipe
+			- clones the stdin input to the read end of the pipe
+			- waits for the children
+		- for the children:
+			- closes the read end of the pipe
+			- clones the stdout to the write end of the pipe, for the father to read.
+			- runs the requested command (see utils)
+
+- ft_pipex_utils.c:
+	- run command:
+		- works with the string provided in each argument to create a cmd string array, emulating argv. It does consider double quotation in the input
+		- locates the path of the command to run (arg[0]) from the environment PATH variable
+		- executes the command's binary
+		- frees all memory used to do the above
+
+	- error handling: using perror provides information on any error during execution.
+
+- libft: All additional smaller functions to make things work (ft_split, ft_strjoin, ft_putstr_fd...).
 
 
 
