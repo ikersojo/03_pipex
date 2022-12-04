@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 22:25:48 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/11/29 21:47:55 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/04 16:14:16 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,53 @@ static char	*ft_get_path(char *cmd, char **envp)
 	return (path);
 }
 
+void	ft_space_to_tab(char **arg)
+{
+	char	*str;
+
+	str = *arg;
+	while (*str)
+	{
+		if (*str == 34 || *str == 39)
+		{
+			while (*str && (*str != 34 || *str != 39))
+			{
+				if (*str == ' ')
+					*str = 9;
+				str++;
+			}
+		}
+		str++;
+	}
+}
+
+static void	ft_tab_to_space(char **arg)
+{
+	char	*str;
+	int		i;
+	int		len;
+
+	str = *arg;
+	i = 0;
+	while (*(str + i))
+	{
+		if (*(str + i) == 9)
+			*(str + i) = ' ';
+		i++;
+	}
+	len = i;
+	if (*str == 34 || *str == 39)
+	{
+		i = 0;
+		while (i < (len - 2))
+		{
+			*(str + i) = *(str + i + 1);
+			i++;
+		}
+		*(str + i) = '\0';
+	}
+}
+
 void	ft_run_command(char *arg, char **envp)
 {
 	char	**cmd;
@@ -63,7 +110,11 @@ void	ft_run_command(char *arg, char **envp)
 	int		error_flag;
 
 	error_flag = 0;
+	ft_space_to_tab(&arg);
 	cmd = ft_split(arg, ' ');
+	i = 0;
+	while (*(cmd + i))
+		ft_tab_to_space((cmd + i++));
 	cmd_path = ft_get_path(*(cmd + 0), envp);
 	if (execve(cmd_path, cmd, envp) == -1)
 		error_flag = 1;

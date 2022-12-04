@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:19:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/03 08:26:07 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/04 16:13:44 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ static void	ft_process(char *str, char **envp)
 		close(*(fd + 1));
 		dup2(*(fd + 0), STDIN_FILENO);
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status) && (WEXITSTATUS(status) == 1))
-			exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -52,6 +50,8 @@ int	main(int argc, char **argv, char **envp)
 			ft_exit_w_error("errno");
 		dup2(infd, STDIN_FILENO);
 		outfd = open(*(argv + 4), O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		if (outfd == -1)
+			ft_exit_w_error("errno");
 		i = 2;
 		while (i < (argc - 2))
 			ft_process(*(argv + i++), envp);
