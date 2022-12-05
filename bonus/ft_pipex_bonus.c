@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:19:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/04 19:49:01 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/05 22:42:22 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,14 @@ int	ft_openfiles(int argc, char **argv, int *infd, int *outfd)
 	char	*opath;
 
 	if (ft_strcmp("here_doc", *(argv + 1)) == 0)
-	{
-		bonus = 2;
-		*infd = open(*(argv + 2), O_RDONLY);
-		if (*infd == -1)
-			ft_exit_w_error("errno");
-	}
+		bonus = 3;
 	else
 	{
-		bonus = 1;
+		bonus = 2;
 		*infd = open(*(argv + 1), O_RDONLY);
 		if (*infd == -1)
 			ft_exit_w_error("errno");
 	}
-
 	opath = *(argv + (argc - 1));
 	if (ft_strcmp("here_doc", *(argv + 1)) == 0)
 		*outfd = open(opath, O_WRONLY | O_CREAT | O_APPEND, 0666);
@@ -64,9 +58,6 @@ int	ft_openfiles(int argc, char **argv, int *infd, int *outfd)
 		*outfd = open(opath, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (*outfd == -1)
 		ft_exit_w_error("errno");
-
-
-
 	return (bonus);
 }
 
@@ -74,21 +65,22 @@ int	main(int argc, char **argv, char **envp)
 {
 	int	infd;
 	int	outfd;
-	int	bonus; // 1 para el caso extendido y 2 para here_doc
-	int i;
+	int	i;
 
 	if (argc >= 5)
 	{
-		bonus = ft_openfiles(argc, argv, &infd, &outfd);
-		i = 2;
-		if (bonus == 2)
-			i = 3;
+		i = ft_openfiles(argc, argv, &infd, &outfd);
+		if (i == 3)
+			ft_heredoc(argv);
+		else
+			dup2(infd, STDIN_FILENO);
 		while (i < (argc - 2))
 			ft_process(*(argv + i++), envp);
 		dup2(outfd, STDOUT_FILENO);
 		ft_run_command(*(argv + i), envp);
-		close(infd);
 		close(outfd);
+		if (ft_strcmp("here_doc", *(argv + 1)) == 0)
+			close(infd);
 	}
 	else
 		ft_exit_w_error("Wrong syntax\n");

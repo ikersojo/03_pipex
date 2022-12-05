@@ -6,7 +6,7 @@
 #    By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/20 16:19:35 by isojo-go          #+#    #+#              #
-#    Updated: 2022/12/04 18:13:23 by isojo-go         ###   ########.fr        #
+#    Updated: 2022/12/05 22:42:22 by isojo-go         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJ			= 	$(SRC:.c=.o)
 
 # Bonus Source Files:
 
-BONUS_FILES	=	ft_pipex_bonus.c ft_pipex_utils_bonus.c
+BONUS_FILES	=	ft_pipex_bonus.c ft_pipex_utils_bonus.c ft_heredoc.c
 SRC_B		=	$(addprefix $(BONUS_DIR), $(BONUS_FILES))
 OBJ_B		= 	$(SRC_B:.c=.o)
 

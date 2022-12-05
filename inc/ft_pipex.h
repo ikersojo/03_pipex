@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 18:01:50 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/04 15:11:44 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/05 22:42:22 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 
 void	ft_exit_w_error(char *str);
 void	ft_run_command(char *arg, char **envp);
+void	ft_heredoc(char **argv);
 
 #endif
