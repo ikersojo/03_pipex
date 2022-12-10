@@ -43,7 +43,8 @@ The Program is divided in the following key functions:
 
 - libft: All additional smaller functions to make things work (ft_split, ft_strjoin, ft_putstr_fd...).
 
-
+# Scope of the Bonus part:
+...
 
 # SCORE
 TBD...
