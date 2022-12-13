@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:25:55 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/13 20:27:19 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:32:48 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strcat(char *dest, const char *src)
 	size_t	i;
 
 	if (!dest || !src)
-		retrun (NULL);
+		return (NULL);
 	i = 0;
 	while (*(dest + i))
 		i++;

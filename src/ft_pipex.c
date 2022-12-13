@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:19:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/04 19:02:23 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:33:44 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,27 @@ static void	ft_process(char *str, char **envp)
 	}
 }
 
+static int	ft_args_empty(int argc, char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (i < argc)
+	{
+		if (ft_strcmp(*(argv + i), ""))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	int	infd;
 	int	outfd;
 	int	i;
 
-	if (argc == 5)
+	if (argc == 5 && !ft_args_empty(argc, argv))
 	{
 		infd = open(*(argv + 1), O_RDONLY);
 		if (infd == -1)
