@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:19:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/05 23:01:03 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:37:47 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,27 @@ int	ft_openfiles(int argc, char **argv, int *infd, int *outfd)
 	return (bonus);
 }
 
+static int	ft_args_empty(int argc, char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (i < argc)
+	{
+		if (ft_strcmp(*(argv + i), ""))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	int	infd;
 	int	outfd;
 	int	i;
 
-	if (argc >= 5)
+	if (argc >= 5 && !ft_args_empty(argc, argv))
 	{
 		i = ft_openfiles(argc, argv, &infd, &outfd);
 		if (i == 3)
