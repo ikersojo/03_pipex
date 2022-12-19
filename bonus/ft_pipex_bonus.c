@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 11:19:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/13 20:37:47 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/19 20:21:32 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	ft_args_empty(int argc, char **argv)
 	i = 0;
 	while (i < argc)
 	{
-		if (ft_strcmp(*(argv + i), ""))
+		if (ft_strcmp(*(argv + i), "") == 0)
 			return (1);
 		i++;
 	}
