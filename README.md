@@ -44,10 +44,12 @@ The Program is divided in the following key functions:
 - libft: All additional smaller functions to make things work (ft_split, ft_strjoin, ft_putstr_fd...).
 
 # Scope of the Bonus part:
-...
+Two new extra features
+1. Multiples pipes
+2. here_doc + appending to outfile
 
 # SCORE
-TBD...
+<img  width="300" src="https://github.com/ikersojo/03_pipex/blob/main/img/score.png\?raw\=true">
 
 
 
